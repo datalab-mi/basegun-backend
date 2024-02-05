@@ -1,0 +1,33 @@
+[tool.isort]
+profile = "black"
+skip_glob = "**/migrations/*.py"
+
+[tool.black]
+force-exclude = '''
+(
+  /(
+    ...
+    | \.venv
+    | .+/migrations
+  )/
+)
+'''
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+omit = [
+  "./venv/*",
+  "*tests*",
+  "*apps.py",
+  "*manage.py",
+  "*__init__.py",
+  "*migrations*",
+  "*asgi*",
+  "*wsgi*",
+  "*admin.py",
+  "*urls.py",
+]
+
+[tool.pytest.ini_options]
+addopts = "--ds=basegun.settings --no-migrations --create-db"
