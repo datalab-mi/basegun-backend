@@ -1,8 +1,10 @@
 Django
 djangorestframework
 psycopg[binary]
+requests
 # Dev
 pytest
+pytest-django
 isort
 black
 coverage
