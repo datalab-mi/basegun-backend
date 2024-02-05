@@ -8,3 +8,4 @@ pytest-django
 isort
 black
 coverage
+factory-boy

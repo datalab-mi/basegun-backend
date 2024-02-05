@@ -2,7 +2,7 @@ from django.core.mail import send_mail
 
 
 class TestMailhog:
-    def test_mail_sent(self, client, faker):
+    def test_mail_sent(self, client):
         email_sent = send_mail(
             "Subject here",
             "Here is the message.",
