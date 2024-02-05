@@ -18,14 +18,28 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ghcr.io/datalab-mi/basegun/basegun-backend:django-${{ github.head_ref }}
+          tags: ghcr.io/datalab-mi/basegun-backend:${{ github.ref_name }}
   
   test:
     name: Test
     needs: build
     runs-on: ubuntu-latest
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     container:
-      image: ghcr.io/datalab-mi/basegun/basegun-backend:django-${{ github.head_ref }}
+      image: ghcr.io/datalab-mi/basegun-backend:${{ github.ref_name }}
       env:
         WORKSPACE: dev
         AWS_REGION: gra
@@ -34,5 +48,6 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         S3_URL_ENDPOINT: https://s3.gra.io.cloud.ovh.net/
         S3_BUCKET_NAME: basegun-s3
+        POSTGRES_PASSWORD: postgres
     steps:
-      - run: cd /app && pytest
+      - run: cd /code && pytest
