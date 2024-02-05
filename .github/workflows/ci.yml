@@ -1,0 +1,38 @@
+name: Continuous integration 
+on: push
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ghcr.io/datalab-mi/basegun/basegun-backend:django-${{ github.head_ref }}
+  
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/datalab-mi/basegun/basegun-backend:django-${{ github.head_ref }}
+      env:
+        WORKSPACE: dev
+        AWS_REGION: gra
+        AWS_DEFAULT_REGION: gra
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        S3_URL_ENDPOINT: https://s3.gra.io.cloud.ovh.net/
+        S3_BUCKET_NAME: basegun-s3
+    steps:
+      - run: cd /app && pytest
