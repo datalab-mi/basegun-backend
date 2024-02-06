@@ -1,7 +1,7 @@
 Django
 djangorestframework
+django-storages[s3]
 psycopg[binary]
-requests
 # Dev
 pytest
 pytest-django

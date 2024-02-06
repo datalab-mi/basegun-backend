@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from rest_framework import mixins, viewsets
 
-# Create your views here.
+from .models import Request
+from .serializers import RequestSerializer
+
+
+class RequestViewSet(
+    mixins.CreateModelMixin,
+    viewsets.GenericViewSet,
+):
+    queryset = Request.objects.all()
+    serializer_class = RequestSerializer

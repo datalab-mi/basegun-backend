@@ -4,7 +4,7 @@ from .models import Request
 
 
 class RequestAdmin(admin.ModelAdmin):
-    list_display = ["id", "picture", "comment", "status", "updated", "created"]
+    list_display = [field.name for field in Request._meta.get_fields()]
 
 
 admin.site.register(Request, RequestAdmin)
