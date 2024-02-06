@@ -15,6 +15,10 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=basegun.settings.development
       - POSTGRES_PASSWORD=exemple
+      - S3_URL_ENDPOINT=http://minio:9000
+      - S3_BUCKET_NAME=basegun-s3
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin
     volumes:
       - .:/code
     ports:
@@ -27,6 +31,13 @@ services:
     ports:
       - "8025:8025"
       - "1025:1025"
+
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    ports:
+      - 9000:9000
+      - 9001:9001
 
   adminer:
     image: adminer
