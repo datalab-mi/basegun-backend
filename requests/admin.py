@@ -9,6 +9,7 @@ class RequestAdmin(admin.ModelAdmin):
 
 class AnalysisAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Analysis._meta.get_fields()]
+    list_filter = ["label"]
 
 
 admin.site.register(Request, RequestAdmin)
