@@ -1,5 +1,11 @@
 from django.db import models
 
+STATUS_CHOICES = [
+    ("pending", "Pending"),
+    ("rejected", "Rejected"),
+    ("processed", "Processed"),
+]
+
 
 class Request(models.Model):
     agent_identifier = models.CharField(max_length=255)
@@ -13,6 +19,10 @@ class Request(models.Model):
     picture_right = models.FileField()
     picture_markings = models.FileField()
     picture_charger = models.FileField()
+    status = models.CharField(
+        max_length=255, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0]
+    )
+    comment = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
