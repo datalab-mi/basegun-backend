@@ -6,7 +6,6 @@ class Request(models.Model):
     assignment_service = models.CharField(max_length=255)
     agent_phone_number = models.CharField(max_length=16)
     agent_email = models.EmailField()
-    seizure_date = models.DateField(max_length=255)
     weapon_type = models.CharField(max_length=255)
     weapon_length = models.IntegerField()
     weapon_barrel_length = models.IntegerField()

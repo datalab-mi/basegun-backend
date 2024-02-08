@@ -1,4 +1,4 @@
-class TestAdmin:
+class TestHealthcheck:
     def test_response(self, client):
-        response = client.get("/admin")
-        assert response.status_code == 301
+        response = client.get("/api/")
+        assert response.status_code == 200
