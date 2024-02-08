@@ -15,8 +15,15 @@ class AnalysisSerializer(serializers.ModelSerializer):
         fields = ["picture"]
 
     def to_representation(self, instance):
+        if instance.confidence < 0.76:
+            confidence_level = "low"
+        elif instance.confidence < 0.98:
+            confidence_level = "medium"
+        else:
+            confidence_level = "high"
         return {
             "picture": instance.picture.url,
             "label": instance.label,
             "confidence": instance.confidence,
+            "confidence_level": confidence_level,
         }
