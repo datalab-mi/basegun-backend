@@ -76,8 +76,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": "db",
-        "NAME": "postgres",
-        "USER": "postgres",
+        "NAME": os.environ["POSTGRES_NAME"],
+        "USER": os.environ["POSTGRES_USER"],
         "PASSWORD": os.environ["POSTGRES_PASSWORD"],
     }
 }
@@ -127,21 +127,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # File uploads
 MEDIA_ROOT = "uploads"
-
-# Storage
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
-            "bucket_name": os.environ.get("S3_BUCKET_NAME", "basegun-s3"),
-            "endpoint_url": os.environ.get("S3_URL_ENDPOINT", None),
-            "use_ssl": False,
-        },
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
 
 APPEND_SLASH = False
 

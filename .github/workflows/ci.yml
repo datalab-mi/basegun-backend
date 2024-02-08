@@ -25,17 +25,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     services:
-      postgres:
-        image: postgres
+      db:
+        image: postgres:16
         env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      minio:
-        image: minio/minio
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -51,6 +46,8 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         S3_URL_ENDPOINT: https://s3.gra.io.cloud.ovh.net/
         S3_BUCKET_NAME: basegun-s3
+        POSTGRES_NAME: postgres
+        POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
     steps:
       - run: cd /code && pytest

@@ -5,8 +5,10 @@ services:
     image: postgres:16
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: example
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
 
   api:
     build: .
@@ -14,7 +16,9 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     environment:
       - DJANGO_SETTINGS_MODULE=basegun.settings.development
-      - POSTGRES_PASSWORD=exemple
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
       - S3_URL_ENDPOINT=http://minio:9000
       - S3_BUCKET_NAME=basegun-s3
       - AWS_ACCESS_KEY_ID=minioadmin
