@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from rest_framework import mixins, viewsets
 
-from .apps import RequestsConfig
+from .apps import WeaponsConfig
 from .models import Analysis, Request
 from .serializers import AnalysisSerializer, RequestSerializer
 from .utils.model import predict_image
@@ -26,5 +26,5 @@ class AnalysisViewSet(
 
     def perform_create(self, serializer):
         picture_bytes = serializer.validated_data["picture"].file.read()
-        label, confidence = predict_image(RequestsConfig.ML_MODEL, picture_bytes)
+        label, confidence = predict_image(WeaponsConfig.ML_MODEL, picture_bytes)
         serializer.save(label=label, confidence=confidence)

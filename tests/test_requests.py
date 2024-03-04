@@ -2,25 +2,18 @@ import base64
 from io import BytesIO
 
 import pytest
-from django.test import Client
 from faker import Faker
+from rest_framework.test import APIClient
 
 fake = Faker()
 
-picture_left = BytesIO(fake.image())
-picture_left.name = "myimage.gif"
-picture_right = BytesIO(fake.image())
-picture_right.name = "myimage.gif"
-picture_markings = BytesIO(fake.image())
-picture_markings.name = "myimage.gif"
-picture_charger = BytesIO(fake.image())
-picture_charger.name = "myimage.gif"
+picture = base64.b64encode(fake.image())
 
 
 @pytest.mark.django_db
 class TestRequests:
     def test_create(self, client):
-        client = Client()
+        client = APIClient()
         response = client.post(
             "/requests/",
             {
@@ -32,10 +25,25 @@ class TestRequests:
                 "weapon_type": "long",
                 "weapon_length": 10,
                 "weapon_barrel_length": 10,
-                "picture_left": picture_left,
-                "picture_right": picture_right,
-                "picture_markings": picture_markings,
-                "picture_charger": picture_charger,
+                "picture_left": picture,
+                "picture_right": picture,
+                "picture_markings": picture,
+                "picture_charger": picture,
             },
+            format="json",
+        )
+        assert response.status_code == 201
+
+
+@pytest.mark.django_db
+class TestAnalysis:
+    def test_create(self, client):
+        client = APIClient()
+        response = client.post(
+            "/analyses/",
+            {
+                "picture": picture,
+            },
+            format="json",
         )
         assert response.status_code == 201

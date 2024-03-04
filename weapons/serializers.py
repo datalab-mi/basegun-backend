@@ -1,15 +1,23 @@
+from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
 from .models import Analysis, Request
 
 
 class RequestSerializer(serializers.ModelSerializer):
+    picture_left = Base64ImageField()
+    picture_right = Base64ImageField()
+    picture_markings = Base64ImageField()
+    picture_charger = Base64ImageField()
+
     class Meta:
         model = Request
         fields = [field.name for field in Request._meta.get_fields()]
 
 
 class AnalysisSerializer(serializers.ModelSerializer):
+    picture = Base64ImageField()
+
     class Meta:
         model = Analysis
         fields = ["picture"]
