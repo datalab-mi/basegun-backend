@@ -1,9 +1,7 @@
 import base64
-from io import BytesIO
 
 import pytest
 from faker import Faker
-from rest_framework.test import APIClient
 
 fake = Faker()
 
@@ -13,7 +11,6 @@ picture = base64.b64encode(fake.image())
 @pytest.mark.django_db
 class TestRequests:
     def test_create(self, client):
-        client = APIClient()
         response = client.post(
             "/requests/",
             {
@@ -38,7 +35,6 @@ class TestRequests:
 @pytest.mark.django_db
 class TestAnalysis:
     def test_create(self, client):
-        client = APIClient()
         response = client.post(
             "/analyses/",
             {
