@@ -5,6 +5,7 @@ drf-extra-fields
 django-cors-headers
 django-storages[s3]
 psycopg[binary]
+gunicorn
 # ML
 torch==2.1.1
 ultralytics==8.1.2
