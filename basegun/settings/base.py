@@ -131,3 +131,10 @@ MEDIA_ROOT = "uploads"
 APPEND_SLASH = False
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+# DRF configuration
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
+}
