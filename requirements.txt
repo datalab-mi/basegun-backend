@@ -1,6 +1,7 @@
 --extra-index-url https://download.pytorch.org/whl/cpu
 Django
 djangorestframework
+djangorestframework-simplejwt
 drf-extra-fields
 django-cors-headers
 django-storages[s3]
