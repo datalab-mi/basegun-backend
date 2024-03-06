@@ -127,6 +127,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # File uploads
 MEDIA_ROOT = "uploads"
+MEDIA_URL = "uploads/"
 
 APPEND_SLASH = False
 
