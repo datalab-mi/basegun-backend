@@ -20,3 +20,5 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 COPY . /code/
+
+RUN python manage.py collectstatic --no-input --settings=basegun.settings.development
